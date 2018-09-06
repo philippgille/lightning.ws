@@ -1,4 +1,8 @@
 lightning.ws www.lightning.ws {
+    # Directory (in Docker container): /srv/www
+    root www
+
+    # Website
     markdown / {
         template template.html
     }
