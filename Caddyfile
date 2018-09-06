@@ -7,3 +7,8 @@ lightning.ws www.lightning.ws {
         template template.html
     }
 }
+
+api.lightning.ws {
+    # The container's internal port is required, which is 8080
+    proxy /qr http://qr-code:8080
+}
