@@ -1,3 +1,5 @@
 lightning.ws www.lightning.ws {
-    markdown /
+    markdown / {
+        template template.html
+    }
 }

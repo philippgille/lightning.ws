@@ -1,3 +1,9 @@
+---
+# template:
+title: Lightning web services
+# sitename:
+---
+
 Lightning web services
 ======================
 
