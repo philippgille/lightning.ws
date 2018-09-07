@@ -11,9 +11,9 @@ Usage
 1. Create a data directory on the host: `mkdir data`
 2. Copy the `tls.cert` and `invoice.macaroon` from your lnd to the `data/` directory
 3. Run the container: `docker run -d --name qr-code -v $(pwd)/data/:/root/data/ -p 8080:8080 philippgille/qr-code -addr "123.123.123.123:10009"`
-4. Send a request: `curl http://localhost:8080/qr?data=testtext`
-5. Pay the invoice from the response via the Lightning Network
-6. Send the request again, this time with the preimage as payment proof: `curl -H "x-preimage: c29tZSBwcmVpbWFnZQ==" http://localhost:8080/qr?data=testtext`
+4. Send a request to generate an invoice: `curl http://localhost:8080/qr`
+5. Take the invoice from the response body and pay it via the Lightning Network
+6. Send the request again, this time with the preimage as payment proof and the data as query parameter: `curl -H "x-preimage: c29tZSBwcmVpbWFnZQ==" http://localhost:8080/qr?data=testtext`
 
 The response contains the QR code as PNG image.
 
