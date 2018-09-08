@@ -18,10 +18,10 @@ You need to have either a direct channel or route to `034b1f48aff6d95965e2442b73
 APIs
 ----
 
-- [QR code ceneration](#qr-code-generation)
+- [QR code generation](#qr-code-generation)
 - More to come soon™...
 
-### QR code ceneration
+### QR code generation
 
 Generates a QR code for the given data.
 
