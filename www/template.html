@@ -21,6 +21,8 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <!--- custom styles -->
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -28,6 +30,15 @@
 
 </head>
 <body>
+
+  <div class="header sticky">
+    <a href="https://lightning.ws">
+      <h1 class="container"><span id="high-voltage">&#9889;</span> Lightning web services</h1>
+    </a>
+    <div id="github-ribbon">
+      <a href="https://github.com/philippgille/lightning.ws" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    </div>
+  </div>
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -41,5 +52,18 @@
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <footer>
+    <div class="container">
+      <div id="footer-left" class="footer-element">
+        <a href="https://twitter.com/philippgille" target="_blank" class="twitter-follow-button" data-show-count="false">Follow me on Twitter</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <div id="footer-right" class="footer-element">
+        Powered by <a href="https://github.com/lightningnetwork/lnd" target="_blank">lnd</a> and <a href="https://github.com/philippgille/ln-paywall" target="_blank">ln-paywall</a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>

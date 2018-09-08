@@ -4,9 +4,6 @@ title: Lightning web services
 # sitename:
 ---
 
-Lightning web services
-======================
-
 *lightning.ws* hosts paywalled web services / APIs that are payable via the [Lightning Network](https://lightning.network).
 
 It's "[eating your own dogfood](https://en.wikipedia.org/wiki/Eating_your_own_dog_food)" for the project *ln-paywall*. For more information please visit the project's GitHub repository: [https://github.com/philippgille/ln-paywall](https://github.com/philippgille/ln-paywall).
