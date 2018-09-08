@@ -7,13 +7,13 @@
 
 .header a {
     text-decoration: none;
+    color: #FFAC33;
 }
 
 .header h1 {
     padding: 16px;
     width: 80%;
     margin: auto;
-    color: #FFAC33;
 }
 
 .header #high-voltage {
