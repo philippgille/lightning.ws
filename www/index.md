@@ -27,5 +27,5 @@ Generates a QR code for the given data.
 
 1. Generate an invoice: `curl https://api.lightning.ws/qr`
 2. Pay the invoice that's in the response body
-3. Send the request with the preimage as payment proof and the data you want in the QR code as query parameter: `curl -H "x-preimage: <PAYMENT_PREIMAGE>" https://api.lightning.ws/qr?data=testtext`
+3. Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code as query parameter: `curl -H "x-preimage: <PAYMENT_PREIMAGE>" https://api.lightning.ws/qr?data=testtext`
 4. The response is the QR code as PNG image

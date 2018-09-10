@@ -16,7 +16,7 @@ Usage
 4. Run the website and reverse proxy container: `docker run -d --name caddy --link qr-code -v $(pwd)/Caddyfile:/etc/Caddyfile -v $HOME/.caddy:/root/.caddy -v $(pwd)/www:/srv/www -p 80:80 -p 443:443 abiosoft/caddy`
 5. Send a request to generate an invoice: `curl https://api.lightning.ws/qr`
 6. Take the invoice from the response body and pay it via the Lightning Network
-7. Send the request again, this time with the preimage as payment proof and the data as query parameter: `curl -H "x-preimage: c29tZSBwcmVpbWFnZQ==" https://api.lightning.ws/qr?data=testtext`
+7. Send the request again, this time with the preimage as payment proof (hex encoded) and the data as query parameter: `curl -H "x-preimage: c29tZSBwcmVpbWFnZQ==" https://api.lightning.ws/qr?data=testtext`
 
 Note
 ----
