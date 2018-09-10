@@ -10,9 +10,9 @@ It's "[eating your own dogfood](https://en.wikipedia.org/wiki/Eating_your_own_do
 Usage
 -----
 
-1. Create a data directory on the host: `mkdir -p api/data/`
-2. Copy the `tls.cert` and `invoice.macaroon` from your lnd to the `api/data/` directory
-3. Run the web service container with your lnd's address as argument: `docker run -d --name qr-code --restart unless-stopped -v $(pwd)/api/data/:/root/data/ philippgille/qr-code -addr "123.123.123.123:10009"`
+1. Create a data directory on the host: `mkdir -p api/data`
+2. Copy the `tls.cert` and `invoice.macaroon` from your lnd to the `api/data` directory
+3. Run the web service container with your lnd's address as argument: `docker run -d --name qr-code --restart unless-stopped -v $(pwd)/api/data:/root/data philippgille/qr-code -addr "123.123.123.123:10009"`
 4. Run the website and reverse proxy container: `docker run -d --name caddy --link qr-code -v $(pwd)/Caddyfile:/etc/Caddyfile -v $HOME/.caddy:/root/.caddy -v $(pwd)/www:/srv/www -p 80:80 -p 443:443 abiosoft/caddy`
 5. Send a request to generate an invoice: `curl https://api.lightning.ws/qr`
 6. Take the invoice from the response body and pay it via the Lightning Network
