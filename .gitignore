@@ -19,3 +19,10 @@
 /Godeps/
 
 # End of https://www.gitignore.io/api/go
+
+# lnd files
+tls.cert
+invoice.macaroon
+
+# bbolt (a.k.a. Bolt DB)
+*.db
