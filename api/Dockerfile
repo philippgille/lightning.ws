@@ -29,7 +29,7 @@ WORKDIR /root/
 COPY --from=builder /go/src/api/api ./
 RUN mkdir data/
 
-VOLUME [ "/root/data" ]
+VOLUME [ "/root/data/" ]
 EXPOSE 8080
 
 ENTRYPOINT ["./api"]
