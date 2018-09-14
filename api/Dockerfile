@@ -13,14 +13,17 @@ RUN go env
 RUN go get -v "github.com/philippgille/ln-paywall/..."
 RUN go get -v "github.com/skip2/go-qrcode"
 
-WORKDIR /go/src/api
-COPY main.go .
+WORKDIR /go/src/api/
+COPY *.go ./
 RUN go build -v
 
 # Runtime image
 FROM alpine
 
 LABEL maintainer "Philipp Gille"
+
+# CA certificates for example for the request to the Azure API
+RUN apk add --no-cache ca-certificates
 
 WORKDIR /root/
 COPY --from=builder /go/src/api/api ./

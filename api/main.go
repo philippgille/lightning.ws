@@ -2,19 +2,25 @@ package main
 
 import (
 	"flag"
-	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/philippgille/ln-paywall/ln"
 	"github.com/philippgille/ln-paywall/storage"
 	"github.com/philippgille/ln-paywall/wall"
-	qrcode "github.com/skip2/go-qrcode"
 )
+
+// General config
 
 var lndAddress = flag.String("addr", "localhost:10009", "Address of the lnd node (including gRPC port)")
 var dataDir = flag.String("dataDir", "data/", "Relative path to the data directory, where tls.cert and invoice.macaroon are located")
-var price = flag.Int64("price", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+
+// Endpoint-specific config
+
+var qrPrice = flag.Int64("qrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+
+var translateApiKey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
+var translatePrice = flag.Int64("translatePrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
 func main() {
 	flag.Parse()
@@ -29,13 +35,7 @@ func main() {
 
 	r := gin.Default()
 
-	// Configure middleware
-
-	// Invoice
-	invoiceOptions := wall.InvoiceOptions{
-		Memo:  "QR code generation API call",
-		Price: *price,
-	}
+	// Configure middleware - endpoint independent
 
 	// LN client
 	lndOptions := ln.LNDoptions{
@@ -50,33 +50,30 @@ func main() {
 
 	// Storage
 	boltOptions := storage.BoltOptions{
-		Path: dataDirSuffixed + "qr-code.db",
+		Path: dataDirSuffixed + "ln-paywall.db",
 	}
 	storageClient, err := storage.NewBoltClient(boltOptions)
 	if err != nil {
 		panic(err)
 	}
 
-	// Use middleware
-	r.Use(wall.NewGinMiddleware(invoiceOptions, lnClient, storageClient))
+	// Configure middleware - endpoint specific
 
-	r.GET("/qr", qrHandler)
+	// Invoice for QR code
+	qrInvoiceOptions := wall.InvoiceOptions{
+		Memo:  "QR code generation API call",
+		Price: *qrPrice,
+	}
+	// Invoice for Translation
+	translateInvoiceOptions := wall.InvoiceOptions{
+		Memo:  "Translation API call",
+		Price: *translatePrice,
+	}
+
+	// Use middleware - per route
+
+	r.GET("/qr", wall.NewGinMiddleware(qrInvoiceOptions, lnClient, storageClient), qrHandler)
+	r.GET("/translate", wall.NewGinMiddleware(translateInvoiceOptions, lnClient, storageClient), translationHandler)
 
 	r.Run() // Listen and serve on 0.0.0.0:8080
-}
-
-func qrHandler(c *gin.Context) {
-	data := c.Query("data")
-	if data == "" {
-		c.String(http.StatusBadRequest, "The query parameter \"data\" is missing")
-		c.Abort()
-	} else {
-		qrBytes, err := qrcode.Encode(data, qrcode.Medium, 256)
-		if err != nil {
-			c.String(http.StatusInternalServerError, "There was an error encoding the data as QR code")
-			c.Abort()
-		} else {
-			c.Data(http.StatusOK, "image/png", qrBytes)
-		}
-	}
 }
