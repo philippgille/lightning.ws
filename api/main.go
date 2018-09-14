@@ -19,7 +19,7 @@ var dataDir = flag.String("dataDir", "data/", "Relative path to the data directo
 
 var qrPrice = flag.Int64("qrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
-var translateApiKey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
+var translateAPIKey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
 var translatePrice = flag.Int64("translatePrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
 func main() {
