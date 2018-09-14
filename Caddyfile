@@ -10,5 +10,5 @@ lightning.ws www.lightning.ws {
 
 api.lightning.ws {
     # The container's internal port is required, which is 8080
-    proxy /qr http://qr-code:8080
+    proxy / http://ln-ws-api:8080
 }

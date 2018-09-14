@@ -7,16 +7,28 @@ Web services and website files for [https://lightning.ws](https://lightning.ws).
 
 It's "[eating your own dogfood](https://en.wikipedia.org/wiki/Eating_your_own_dog_food)" for the project *ln-paywall*. For more information please visit the project's GitHub repository: [https://github.com/philippgille/ln-paywall](https://github.com/philippgille/ln-paywall).
 
+Prerequisites
+-------------
+
+- A running lnd node, either on a remote host and accessible from outside, or on the same host, in which case you can either start this container in "host network" mode, or use the container's gateway IP address to reach the host's localhost
+- An [Azure Cognitive Services "Translator Text API"](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/) subscription key
+
 Usage
 -----
 
 1. Create a data directory on the host: `mkdir -p api/data`
 2. Copy the `tls.cert` and `invoice.macaroon` from your lnd to the `api/data` directory
-3. Run the web service container with your lnd's address as argument: `docker run -d --name qr-code --restart unless-stopped -v $(pwd)/api/data:/root/data philippgille/qr-code -addr "123.123.123.123:10009"`
-4. Run the website and reverse proxy container: `docker run -d --name caddy --link qr-code -v $(pwd)/Caddyfile:/etc/Caddyfile -v $HOME/.caddy:/root/.caddy -v $(pwd)/www:/srv/www -p 80:80 -p 443:443 abiosoft/caddy`
-5. Send a request to generate an invoice: `curl https://api.lightning.ws/qr`
+3. Run the web service container with your lnd's address and the Azure translation API key as argument:
+    - `docker run -d --name ln-ws-api --restart unless-stopped -v $(pwd)/api/data:/root/data philippgille/ln-ws-api -addr "123.123.123.123:10009" -translateApiKey "abc123def456"`
+4. Run the website and reverse proxy container:
+    - `docker run -d --name caddy --link ln-ws-api -v $(pwd)/Caddyfile:/etc/Caddyfile -v $HOME/.caddy:/root/.caddy -v $(pwd)/www:/srv/www -p 80:80 -p 443:443 abiosoft/caddy`
+5. Send a request to generate an invoice:
+      - QR code: `curl http://localhost:8080/qr`
+      - Translation: `curl http://localhost:8080/translate`
 6. Take the invoice from the response body and pay it via the Lightning Network
-7. Send the request again, this time with the preimage as payment proof (hex encoded) and the data as query parameter: `curl -H "x-preimage: c29tZSBwcmVpbWFnZQ==" https://api.lightning.ws/qr?data=testtext`
+7. Send the request again, this time with the preimage as payment proof (hex encoded) and the data as query parameter:
+      - QR code: `curl -H "x-preimage: 119969c2338798cd56708126b5d6c0f6f5e75ed38da7a409b0081d94b4dacbf8" http://localhost:8080/qr?data=testtext`
+      - Translation: `curl -H "x-preimage: 119969c2338798cd56708126b5d6c0f6f5e75ed38da7a409b0081d94b4dacbf8" http://localhost:8080/translate?text=Hallo%Welt&to=en`
 
 Note
 ----
