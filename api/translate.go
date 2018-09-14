@@ -55,7 +55,7 @@ func translationHandler(c *gin.Context) {
 	}
 
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Content-Length", strconv.FormatInt(req.ContentLength, len(text)))
+	req.Header.Add("Content-Length", strconv.FormatInt(req.ContentLength, 10))
 	req.Header.Add("Ocp-Apim-Subscription-Key", *translateAPIKey)
 
 	resp, err := client.Do(req)
