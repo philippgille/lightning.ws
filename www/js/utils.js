@@ -1,5 +1,17 @@
 "use strict";
 
+var BASE_URL;
+
+function detectBaseUrl(){
+    if (document.location.href.indexOf("staging") !== -1 ||
+            document.location.href.indexOf("localhost")) {
+        BASE_URL = "https://staging.api.lightning.ws";
+    } else {
+        BASE_URL = "https://api.lightning.ws";
+    }
+}
+detectBaseUrl();
+
 function setCssById(id, obj) {
     Object.keys(obj).forEach(function (key) {
         document.getElementById(id).style[key] = obj[key];
@@ -8,6 +20,10 @@ function setCssById(id, obj) {
 
 function setValueById(id, val) {
     document.getElementById(id).value = val;
+}
+
+function setInnerHtmlById(id, val) {
+    document.getElementById(id).innerHTML = val;
 }
 
 function copyToClipboard(elemendId){
@@ -26,3 +42,20 @@ function hide(id){
 function getValueById(id){
     return document.getElementById(id).value;
 }
+
+function generateInvoice(url, containerIdsToShow, inputFieldId){
+    fetch(url, {
+        method: 'get',
+        headers: new Headers({
+        'Content-Type': 'text/plain'
+        })
+    }).then(function (response) {
+        return response.text();
+    }).then(function (data){
+        containerIdsToShow.forEach(function (id) {
+            show(id);
+        });
+        setValueById(inputFieldId, data);
+    });
+}
+

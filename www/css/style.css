@@ -81,21 +81,31 @@ footer ul {
     }
 }
 
-/* QR Code form elements */
+/* QR Code & translate form elements */
 
-#responseArea, #dataArea, #preimage{
+#responseAreaQr, #dataAreaQr, #preimageQr,
+#responseAreaTr, #textAreaTr, #preimageTr, #translatedText{
     width: 100%;
 }
 
-#responseContainer, #preimageContainer, #qrImageContainer, #sendError{
+#fromTr, #toTr{
+    width: 48%;
+}
+
+#toTr{
+    margin-left: 4%;
+}
+
+#responseContainerQr, #preimageContainerQr, #qrImageContainer, #sendErrorQr,
+#responseContainerTr, #preimageContainerTr, #translationContainer, #sendErrorTr{
     display: none;
     margin-top: 10px;
 }
 
-#sendError{
+#sendErrorQr, #sendErrorTr{
     color: #a80000;
 }
 
-#generateBtnContainer{
+#generateBtnContainerQr, #generateBtnContainerTr{
     margin-top: 10px;
 }
