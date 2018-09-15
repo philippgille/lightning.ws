@@ -25,7 +25,7 @@ APIs
 
 Generates a QR code for the given data.
 
-1. Generate an invoice: `curl https://api.lightning.ws/qr`
-2. Pay the invoice that's in the response body
-3. Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code as query parameter: `curl -H "x-preimage: <PAYMENT_PREIMAGE>" https://api.lightning.ws/qr?data=testtext`
-4. The response is the QR code as PNG image
+1. Generate an invoice: `curl https://api.lightning.ws/qr` <div id="generateBtnContainer"><button onclick="generateInvoice()">Generate invoice now</button></div>
+2. Pay the invoice that's in the response body <div id="responseContainer"><input type="text" id="responseArea"><button onclick="copyToClipboard('responseArea')">Copy to clipboard</button></div>
+3. Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code as query parameter: `curl -H "x-preimage: <PAYMENT_PREIMAGE>" https://api.lightning.ws/qr?data=testtext` <div id="preimageContainer"><input id="preimage" placeholder="preimage" type="text" /><textarea placeholder="data" id="dataArea"></textarea><button onclick="sendPreImage()">Create QR code</button><div id="sendError"></div></div>
+4. The response is the QR code as PNG image <div id="qrImageContainer"><img id="qrImage" src="" alt="qrCode" /></div>

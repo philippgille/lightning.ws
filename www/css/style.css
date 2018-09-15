@@ -80,3 +80,22 @@ footer ul {
         margin: 10px auto;
     }
 }
+
+/* QR Code form elements */
+
+#responseArea, #dataArea, #preimage{
+    width: 100%;
+}
+
+#responseContainer, #preimageContainer, #qrImageContainer, #sendError{
+    display: none;
+    margin-top: 10px;
+}
+
+#sendError{
+    color: #a80000;
+}
+
+#generateBtnContainer{
+    margin-top: 10px;
+}
