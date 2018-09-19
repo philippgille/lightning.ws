@@ -1,0 +1,107 @@
+<h3 id="qr-code-generation">QR code generation</h3>
+
+<p>Generates a QR code for the given data.</p>
+
+<ul id="tabnavQr" class="tab-nav" data-tabcontentid="qrtabs">
+    <li><a class="button active" data-tabid="#qr-tryout">Try out</a></li>
+    <li><a class="button" data-tabid="#qr-curl">Curl</a></li>
+    <li><a class="button" data-tabid="#qr-go-plain">Go plain</a></li>
+    <li><a class="button" data-tabid="#qr-go-pay">Go pay</a></li>
+    <li><a class="button" data-tabid="#qr-javascript">JavaScript</a></li>
+</ul>
+
+<div class="tab-content" id="qrtabs">
+    <div class="tab-pane active" id="qr-tryout">
+        <div class="tryout-tab-wrapper">
+            <ol>
+                <li>Generate an invoice: 
+                    <div id="generateBtnContainerQr"><button onclick="generateInvoiceQR()">Generate invoice now</button></div>
+                </li>
+                <li>Pay the invoice that's in the response body 
+                    <div id="responseContainerQr">
+                        <input id="responseAreaQr" type="text">
+                        <button onclick="copyToClipboard('responseAreaQr')">Copy to clipboard</button>
+                    </div>
+                </li>
+                <li>Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code as query
+                    parameter: 
+                    <div id="preimageContainerQr">
+                        <input id="preimageQr" placeholder="preimage" type="text">
+                        <textarea placeholder="data" id="dataAreaQr"></textarea>
+                        <button onclick="sendPreImageQR()">Create QR code</button>
+                        <div id="sendErrorQr"></div>
+                    </div>
+                </li>
+                <li>The response is the QR code as PNG image <div id="qrImageContainer"><img id="qrImage" src="" alt="qrCode"></div>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="tab-pane" id="qr-curl">
+        <pre>
+<code class="bash">  # 1. Generate invoice:
+  curl https://api.lightning.ws/qr
+  # 2. Pay the invoice that's in the response body 
+  # 3. Send the request with the preimage as payment proof (hex encoded) 
+  #    and the data you want in the QR code as query parameter: 
+  curl -H "x-preimage: &lt;PAYMENT_PREIMAGE&gt;" https://api.lightning.ws/qr?data=testtext
+  # 4. The response is the QR code as PNG image
+</code>
+        </pre>
+    </div>
+    <div class="tab-pane" id="qr-go-plain">
+        <pre>
+<code class="go">  // go plain 
+</code>
+        </pre>
+    </div>
+    <div class="tab-pane" id="qr-go-pay">
+        <pre>
+<code class="go">  // go with package 'pay' 
+</code>
+        </pre>
+    </div>
+    <div class="tab-pane" id="qr-javascript">
+        <pre>
+<code class="javascript">  // 1. Generate invoice
+  fetch("https://api.lightning.ws/qr", { 
+      method: 'get', 
+      headers: new Headers({ 'Content-Type': 'text/plain' }) 
+  }).then(function (response) {
+    return response.text();
+  }).then(function (data) {
+    // data is the invoice
+  });
+  // 2. Pay the invoice that's in the response body 
+  // 3. Send the request with the preimage as payment proof (hex encoded) 
+  //    and the data you want in the QR code as query parameter: 
+  var preimage = "PAYMENT_PREIMAGE";
+  var data = "Hello world of QR codes!";
+  fetch("https://api.lightning.ws/qr?data=" + data, {
+    method: 'get',
+    headers: new Headers({
+      'X-Preimage': preimage
+    })
+  }).then(function (response) {
+    if (response.status === 200) {
+      // qr code image as blob
+      return response.blob();
+    } else {
+      // error as text
+      return response.text();
+    }
+  }).then(function (response) {
+    if (typeof response === "string") {
+      // handle error
+    } else {
+      var qrCodeURL = URL.createObjectURL(response);
+      // 4. use the qrCodeURL 
+      //    e.g. to set the src of an image html element
+    }
+  });
+</code>
+        </pre>
+    </div>
+</div>
+
+

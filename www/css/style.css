@@ -93,7 +93,7 @@ footer ul {
 }
 
 #toTr{
-    margin-left: 4%;
+    margin-left: 3%;
 }
 
 #responseContainerQr, #preimageContainerQr, #qrImageContainer, #sendErrorQr,
@@ -108,4 +108,17 @@ footer ul {
 
 #generateBtnContainerQr, #generateBtnContainerTr{
     margin-top: 10px;
+}
+
+.tryout-tab-wrapper{
+    border: 1px solid #E1E1E1;
+    border-radius: 4px;
+    margin-top: 1rem;
+    padding: 10px 20px;
+    font-size: 90%;
+    margin-bottom: 3.5rem;
+}
+
+.tab-content pre{
+    margin-bottom: 0rem;
 }

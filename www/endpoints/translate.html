@@ -1,0 +1,137 @@
+<h3 id="translate">Translate</h3>
+
+<p>Translate a text with the translate API.</p>
+
+<ul id="tabnavTranslate" class="tab-nav" data-tabcontentid="translate">
+    <li><a class="button active" data-tabid="#tr-tryout">Try out</a></li>
+    <li><a class="button" data-tabid="#tr-curl">Curl</a></li>
+    <li><a class="button" data-tabid="#tr-go-plain">Go plain</a></li>
+    <li><a class="button" data-tabid="#tr-go-pay">Go pay</a></li>
+    <li><a class="button" data-tabid="#tr-javascript">JavaScript</a></li>
+</ul>
+
+
+<div class="tab-content" id="translate">
+    <div class="tab-pane active" id="tr-tryout">
+        <div class="tryout-tab-wrapper">
+            <ol>
+                <li>Generate an invoice:
+                    <div id="generateBtnContainerTr"><button onclick="generateInvoiceTr()">Generate invoice now</button></div>
+                </li>
+                <li>Pay the invoice that's in the response body
+                    <div id="responseContainerTr">
+                        <input id="responseAreaTr" type="text">
+                        <button onclick="copyToClipboard('responseAreaTr')">Copy to clipboard</button>
+                    </div>
+                </li>
+                <li>Send the request with the preimage as payment proof (hex encoded) and the text you want to translate in your
+                    chosen target language
+                    <div id="preimageContainerTr"><input id="preimageTr" placeholder="preimage" type="text">
+                        <input id="fromTr" placeholder="from (default: autodetection)" type="text">
+                        <input id="toTr" placeholder="target language" type="text">
+                        <textarea placeholder="text to translate" id="textAreaTr"></textarea>
+                        <button onclick="sendPreImageTr()">Translate text</button>
+                        <div id="sendErrorTr"></div>
+                    </div>
+                </li>
+                <li>The response is a JSON array with the translation. <div id="translationContainer"> Your text was translated
+                    from <i><span id="responseFromTr"></span></i> to <i><span id="responseToTr"></span></i>:
+                    <textarea id="translatedText"></textarea></div>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="tab-pane" id="tr-curl">
+        <pre>
+<code class="bash">  # 1. Generate invoice:
+  curl https://api.lightning.ws/translate
+  # 2. Pay the invoice that's in the response body 
+  # 3. Send the request with the preimage as payment proof (hex encoded) and the 
+  #    text you want to translate in your chosen target language
+  curl -H "x-preimage: &lt;PAYMENT_PREIMAGE&gt;" https://api.lightning.ws/translate?text=hello&amp;to=de[&amp;from=en]
+  # 4. The response is the QR code as PNG image
+</code>
+        </pre>
+    </div>
+
+    <div class="tab-pane" id="tr-go-plain">
+        <pre>
+<code class="go">  // go plain 
+</code>
+        </pre>
+    </div>
+
+    <div class="tab-pane" id="tr-go-pay">
+        <pre>
+<code class="go">  // go with package 'pay' 
+</code>
+        </pre>
+    </div>
+
+    <div class="tab-pane" id="tr-javascript">
+        <pre>
+<code class="javascript">  // 1. Generate invoice
+  fetch("https://api.lightning.ws/translate", { 
+      method: 'get', 
+      headers: new Headers({ 'Content-Type': 'text/plain' }) 
+  }).then(function (response) {
+    return response.text();
+  }).then(function (data) {
+    // data is the invoice
+  });
+  // 2. Pay the invoice that's in the response body 
+  // 3. Send the request with the preimage as payment proof (hex encoded) and the 
+  //    text you want to translate in your chosen target language
+  var preimage = "PAYMENT_PREIMAGE";
+  var text = encodeURI("Hello world of translations, please translate me now!");
+  var to = "de";
+  // 'to' parameter is optional, if it's empty it will be suggested
+  var fromTr = "en";
+  var url = "https://api.lightning.ws/translate?text=" + text + "&to=" + to;
+  if (fromTr !== ""){
+      url += "&from=" + fromTr;
+  }
+  fetch(url, {
+    method: 'get',
+    headers: new Headers({ 'X-Preimage': preimage })
+  }).then(function (response) {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      // got error as text
+      return response.text();
+    }
+  }).then(function (response){
+    if (typeof response === "object") {
+      var fromLanguage = response[0].detectedLanguage.language;
+      var toLanguage = response[0].translations[0].to;
+      var tranlationText = response[0].translations[0].text;
+      // ...
+    } else {
+      var errorTExt = response;
+      // ...
+    }
+  });
+  /*
+  The response will look like this:
+  [
+    {
+      "detectedLanguage": {
+        "language": "de",
+        "score": 0.88
+        },
+      "translations": [
+        {
+          "text": "The API is now successfully deployed on staging",
+          "to": "en"
+        }
+      ]
+    }
+  ]
+  */
+</code>
+        </pre>
+    </div>
+</div>
+
+
