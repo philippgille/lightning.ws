@@ -5,8 +5,8 @@
 <ul id="tabnavQr" class="tab-nav" data-tabcontentid="qrtabs">
     <li><a class="button active" data-tabid="#qr-tryout">Try out</a></li>
     <li><a class="button" data-tabid="#qr-curl">Curl</a></li>
-    <li><a class="button" data-tabid="#qr-go-plain">Go plain</a></li>
-    <li><a class="button" data-tabid="#qr-go-pay">Go pay</a></li>
+    <li><a class="button" data-tabid="#qr-go-vanilla">Go vanilla</a></li>
+    <li><a class="button" data-tabid="#qr-go-pay">Go pay pkg</a></li>
     <li><a class="button" data-tabid="#qr-javascript">JavaScript</a></li>
 </ul>
 
@@ -14,17 +14,17 @@
     <div class="tab-pane active" id="qr-tryout">
         <div class="tryout-tab-wrapper">
             <ol>
-                <li>Generate an invoice: 
+                <li>Generate an invoice:
                     <div id="generateBtnContainerQr"><button onclick="generateInvoiceQR()">Generate invoice now</button></div>
                 </li>
-                <li>Pay the invoice that's in the response body 
+                <li>Pay the invoice that's in the response body
                     <div id="responseContainerQr">
                         <input id="responseAreaQr" type="text">
                         <button onclick="copyToClipboard('responseAreaQr')">Copy to clipboard</button>
                     </div>
                 </li>
-                <li>Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code as query
-                    parameter: 
+                <li>Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code
+                    as query parameter:
                     <div id="preimageContainerQr">
                         <input id="preimageQr" placeholder="preimage" type="text">
                         <textarea placeholder="data" id="dataAreaQr"></textarea>
@@ -32,7 +32,8 @@
                         <div id="sendErrorQr"></div>
                     </div>
                 </li>
-                <li>The response is the QR code as PNG image <div id="qrImageContainer"><img id="qrImage" src="" alt="qrCode"></div>
+                <li>The response is the QR code as PNG image
+                    <div id="qrImageContainer"><img id="qrImage" src="" alt="qrCode"></div>
                 </li>
             </ol>
         </div>
@@ -44,14 +45,14 @@
   # 2. Pay the invoice that's in the response body 
   # 3. Send the request with the preimage as payment proof (hex encoded) 
   #    and the data you want in the QR code as query parameter: 
-  curl -H "x-preimage: &lt;PAYMENT_PREIMAGE&gt;" https://api.lightning.ws/qr?data=testtext
+  curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://api.lightning.ws/qr?data=testtext"
   # 4. The response is the QR code as PNG image
 </code>
         </pre>
     </div>
-    <div class="tab-pane" id="qr-go-plain">
+    <div class="tab-pane" id="qr-go-vanilla">
         <pre>
-<code class="go">  // go plain 
+<code class="go">  // Coming soon...
 </code>
         </pre>
     </div>
@@ -103,5 +104,3 @@
         </pre>
     </div>
 </div>
-
-

@@ -5,8 +5,8 @@
 <ul id="tabnavTranslate" class="tab-nav" data-tabcontentid="translate">
     <li><a class="button active" data-tabid="#tr-tryout">Try out</a></li>
     <li><a class="button" data-tabid="#tr-curl">Curl</a></li>
-    <li><a class="button" data-tabid="#tr-go-plain">Go plain</a></li>
-    <li><a class="button" data-tabid="#tr-go-pay">Go pay</a></li>
+    <li><a class="button" data-tabid="#tr-go-vanilla">Go vanilla</a></li>
+    <li><a class="button" data-tabid="#tr-go-pay">Go pay pkg</a></li>
     <li><a class="button" data-tabid="#tr-javascript">JavaScript</a></li>
 </ul>
 
@@ -24,8 +24,8 @@
                         <button onclick="copyToClipboard('responseAreaTr')">Copy to clipboard</button>
                     </div>
                 </li>
-                <li>Send the request with the preimage as payment proof (hex encoded) and the text you want to translate in your
-                    chosen target language
+                <li>Send the request with the preimage as payment proof (hex encoded) and the text you want to translate
+                    in your chosen target language
                     <div id="preimageContainerTr"><input id="preimageTr" placeholder="preimage" type="text">
                         <input id="fromTr" placeholder="from (default: autodetection)" type="text">
                         <input id="toTr" placeholder="target language" type="text">
@@ -34,9 +34,9 @@
                         <div id="sendErrorTr"></div>
                     </div>
                 </li>
-                <li>The response is a JSON array with the translation. <div id="translationContainer"> Your text was translated
-                    from <i><span id="responseFromTr"></span></i> to <i><span id="responseToTr"></span></i>:
-                    <textarea id="translatedText"></textarea></div>
+                <li>The response is a JSON array with the translation.
+                    <div id="translationContainer"> Your text was translated from <i><span id="responseFromTr"></span></i> to <i><span id="responseToTr"></span></i>:
+                        <textarea id="translatedText"></textarea></div>
                 </li>
             </ol>
         </div>
@@ -48,15 +48,15 @@
   # 2. Pay the invoice that's in the response body 
   # 3. Send the request with the preimage as payment proof (hex encoded) and the 
   #    text you want to translate in your chosen target language
-  curl -H "x-preimage: &lt;PAYMENT_PREIMAGE&gt;" https://api.lightning.ws/translate?text=hello&amp;to=de[&amp;from=en]
+  curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://lightning.ws/translate?text=Hallo%20Welt&to=en"
   # 4. The response is the QR code as PNG image
 </code>
         </pre>
     </div>
 
-    <div class="tab-pane" id="tr-go-plain">
+    <div class="tab-pane" id="tr-go-vanilla">
         <pre>
-<code class="go">  // go plain 
+<code class="go">  // Coming soon...
 </code>
         </pre>
     </div>
@@ -85,7 +85,7 @@
   var preimage = "PAYMENT_PREIMAGE";
   var text = encodeURI("Hello world of translations, please translate me now!");
   var to = "de";
-  // 'to' parameter is optional, if it's empty it will be suggested
+  // 'fromTr' parameter is optional, if it's empty it will be suggested
   var fromTr = "en";
   var url = "https://api.lightning.ws/translate?text=" + text + "&to=" + to;
   if (fromTr !== ""){
@@ -133,5 +133,3 @@
         </pre>
     </div>
 </div>
-
-
