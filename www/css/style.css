@@ -84,11 +84,16 @@ footer ul {
 /* QR Code & translate form elements */
 
 #responseAreaQr, #dataAreaQr, #preimageQr,
-#responseAreaTr, #textAreaTr, #preimageTr, #translatedText{
+#responseAreaTr, #textAreaTr, #preimageTr, #translatedText,
+#responseAreaOcr, #imageUrlOcr, #preimageOcr, #ocrJson{
     width: 100%;
 }
 
-#fromTr, #toTr{
+#ocrJson{
+    height: 300px;
+}
+
+#fromTr, #toTr, #imageUrl{
     width: 48%;
 }
 
@@ -97,16 +102,17 @@ footer ul {
 }
 
 #responseContainerQr, #preimageContainerQr, #qrImageContainer, #sendErrorQr,
-#responseContainerTr, #preimageContainerTr, #translationContainer, #sendErrorTr{
+#responseContainerTr, #preimageContainerTr, #translationContainer, #sendErrorTr,
+#responseContainerOcr, #preimageContainerOcr, #ocrContainer, #sendErrorOcr{
     display: none;
     margin-top: 10px;
 }
 
-#sendErrorQr, #sendErrorTr{
+#sendErrorQr, #sendErrorTr, #sendErrorOcr{
     color: #a80000;
 }
 
-#generateBtnContainerQr, #generateBtnContainerTr{
+#generateBtnContainerQr, #generateBtnContainerTr, #generateBtnContainerOcr{
     margin-top: 10px;
 }
 

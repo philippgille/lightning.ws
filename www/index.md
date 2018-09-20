@@ -20,5 +20,5 @@ APIs
 
 - [QR code generation](#qr-code-generation)
 - [Translate](#translate)
+- [OCR (text recognition)](#ocr)
 - More to come soon™...
-

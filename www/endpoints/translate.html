@@ -48,7 +48,7 @@
   # 2. Pay the invoice that's in the response body 
   # 3. Send the request with the preimage as payment proof (hex encoded) and the 
   #    text you want to translate in your chosen target language
-  curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://lightning.ws/translate?text=Hallo%20Welt&to=en"
+  curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://api.lightning.ws/translate?text=Hallo%20Welt&to=en"
   # 4. The response is the QR code as PNG image
 </code>
         </pre>
@@ -85,7 +85,7 @@ func main() {
     client := pay.NewClient(nil, lnClient) // Uses http.DefaultClient if no http.Client is passed
 
     // Send request to an ln-paywalled API
-    res, err := client.Get("https://lightning.ws/translate?text=Hallo%20Welt&to=en")
+    res, err := client.Get("https://api.lightning.ws/translate?text=Hallo%20Welt&to=en")
     if err != nil {
         panic(err)
     }

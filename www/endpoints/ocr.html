@@ -1,0 +1,139 @@
+<h3 id="ocr">OCR (text recognition)</h3>
+
+<p>Recognize text in images with the OCR API</p>
+
+<ul id="tabnavOcr" class="tab-nav" data-tabcontentid="ocr">
+    <li><a class="button active" data-tabid="#ocr-tryout">Try out</a></li>
+    <li><a class="button" data-tabid="#ocr-curl">Curl</a></li>
+    <li><a class="button" data-tabid="#ocr-go-vanilla">Go vanilla</a></li>
+    <li><a class="button" data-tabid="#ocr-go-pay">Go pay pkg</a></li>
+    <li><a class="button" data-tabid="#ocr-javascript">JavaScript</a></li>
+</ul>
+
+<div class="tab-content" id="ocr">
+    <div class="tab-pane active" id="ocr-tryout">
+        <div class="tryout-tab-wrapper">
+            <ol>
+                <li>Generate an invoice:
+                    <div id="generateBtnContainerOcr"><button onclick="generateInvoiceOcr()">Generate invoice now</button></div>
+                </li>
+                <li>Pay the invoice that's in the response body
+                    <div id="responseContainerOcr">
+                        <input id="responseAreaOcr" type="text">
+                        <button onclick="copyToClipboard('responseAreaOcr')">Copy to clipboard</button>
+                    </div>
+                </li>
+                <li>Send the request with the preimage as payment proof (hex encoded) and the URL of the image you want to recognize text in
+                    <div id="preimageContainerOcr"><input id="preimageOcr" placeholder="preimage" type="text">
+                        <input id="imageUrlOcr" placeholder="image URL" type="text">
+                        <button onclick="sendPreImageOcr()">Recognize text</button>
+                        <div id="sendErrorOcr"></div>
+                    </div>
+                </li>
+                <li>The response is a JSON object with the bounding boxes and text of recognized text.
+                    <div id="ocrContainer"><textarea id="ocrJson"></textarea></div>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="tab-pane" id="ocr-curl">
+        <pre>
+<code class="bash">  # 1. Generate invoice:
+  curl https://api.lightning.ws/ocr
+  # 2. Pay the invoice that's in the response body 
+  # 3. Send the request with the preimage as payment proof (hex encoded) and the 
+  #    image URL of the image you want to recognize text in
+  curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://api.lightning.ws/ocr?imageUrl=http%3A%2F%2Fexample%2Ecom%2Fimage%2Epng"
+  # 4. The response is the QR code as PNG image
+</code>
+        </pre>
+    </div>
+
+    <div class="tab-pane" id="ocr-go-vanilla">
+        <pre>
+<code class="go">  // Coming soon...
+</code>
+        </pre>
+    </div>
+
+    <div class="tab-pane" id="ocr-go-pay">
+        <pre>
+<code class="go">package main
+
+import (
+    "fmt"
+    "io/ioutil"
+
+    "github.com/philippgille/ln-paywall/ln"
+    "github.com/philippgille/ln-paywall/pay"
+)
+
+func main() {
+    // Set up client
+    lndOptions := ln.LNDoptions{ // Default address: "localhost:10009", CertFile: "tls.cert"
+        MacaroonFile: "admin.macaroon", // admin.macaroon is required for making payments
+    }
+    lnClient, err := ln.NewLNDclient(lndOptions)
+    if err != nil {
+        panic(err)
+    }
+    client := pay.NewClient(nil, lnClient) // Uses http.DefaultClient if no http.Client is passed
+
+    // Send request to an ln-paywalled API
+    res, err := client.Get("https://api.lightning.ws/ocr?imageUrl=http%3A%2F%2Fexample%2Ecom%2Fimage%2Epng")
+    if err != nil {
+        panic(err)
+    }
+    defer res.Body.Close()
+
+    // Print response body
+    resBody, err := ioutil.ReadAll(res.Body)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(string(resBody))
+}
+</code>
+        </pre>
+    </div>
+
+    <div class="tab-pane" id="ocr-javascript">
+        <pre>
+<code class="javascript">  // 1. Generate invoice
+  fetch("https://api.lightning.ws/ocr", { 
+      method: 'get', 
+      headers: new Headers({ 'Content-Type': 'text/plain' }) 
+  }).then(function (response) {
+    return response.text();
+  }).then(function (data) {
+    // data is the invoice
+  });
+  // 2. Pay the invoice that's in the response body 
+  // 3. Send the request with the preimage as payment proof (hex encoded) and the 
+  //    image URL of the image you want to recognize text in
+  var preimage = "PAYMENT_PREIMAGE";
+  var imageUrl = encodeURI("http://example.com/image.png");
+  var url = "https://api.lightning.ws/ocr?imageUrl=" + imageUrl;
+  fetch(url, {
+    method: 'get',
+    headers: new Headers({ 'X-Preimage': preimage })
+  }).then(function (response) {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      // got error as text
+      return response.text();
+    }
+  }).then(function (response){
+    if (typeof response === "object") {
+      var recognizedText = response;
+      // ...
+    } else {
+      var errorTExt = response;
+      // ...
+    }
+  });
+</code>
+        </pre>
+    </div>
+</div>
