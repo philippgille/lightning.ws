@@ -10,5 +10,7 @@ docker run -d \
     --restart unless-stopped \
     -v $SCRIPTDIR/data/:/root/data/ \
     philippgille/ln-ws-api \
-    -addr "$LND_ADDR"
-    -translateApiKey "$TRANSLATE_API_KEY"
+    -addr "$LND_ADDR" \
+    -translateApiKey "$TRANSLATE_API_KEY" \
+    -visionRegion "$VISION_REGION" \
+    -visionApiKey "$VISION_API_KEY"

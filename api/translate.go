@@ -12,6 +12,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// translationHandler reads a text to translate and language to translate to from the request
+// and uses the Azure Cognitive Services "Translator Text API" to translate the text.
+// See https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/
+// and https://docs.microsoft.com/en-us/azure/cognitive-services/translator/
+// and https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference
 func translationHandler(c *gin.Context) {
 	const uriBase = "https://api.cognitive.microsofttranslator.com"
 	const uriPath = "/translate?api-version=3.0"
@@ -56,7 +61,7 @@ func translationHandler(c *gin.Context) {
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Content-Length", strconv.FormatInt(req.ContentLength, 10))
-	req.Header.Add("Ocp-Apim-Subscription-Key", *translateAPIKey)
+	req.Header.Add("Ocp-Apim-Subscription-Key", *translateAPIkey)
 
 	resp, err := client.Do(req)
 	if err != nil {

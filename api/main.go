@@ -17,10 +17,17 @@ var dataDir = flag.String("dataDir", "data/", "Relative path to the data directo
 
 // Endpoint-specific config
 
+// QR
 var qrPrice = flag.Int64("qrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
-var translateAPIKey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
+// Translate
+var translateAPIkey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
 var translatePrice = flag.Int64("translatePrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+
+// Vision
+var visionAPIkey = flag.String("visionApiKey", "", "Azure Cognitive Services subscription key for \"Computer Vision\"")
+var visionRegion = flag.String("visionRegion", "westcentralus", "Azure region of your created Azure resource - your \"Computer Vision\" subscription key is bound to this region")
+var ocrPrice = flag.Int64("ocrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
 func main() {
 	flag.Parse()
@@ -67,11 +74,17 @@ func main() {
 		Memo:  "Translation API call",
 		Price: *translatePrice,
 	}
+	// Invoice for OCR
+	ocrInvoiceOptions := wall.InvoiceOptions{
+		Memo:  "OCR API call",
+		Price: *ocrPrice,
+	}
 
 	// Use middleware - per route
 
 	r.GET("/qr", wall.NewGinMiddleware(qrInvoiceOptions, lnClient, storageClient), qrHandler)
 	r.GET("/translate", wall.NewGinMiddleware(translateInvoiceOptions, lnClient, storageClient), translationHandler)
+	r.GET("/ocr", wall.NewGinMiddleware(ocrInvoiceOptions, lnClient, storageClient), ocrHandler)
 
 	r.Run() // Listen and serve on 0.0.0.0:8080
 }

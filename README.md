@@ -14,6 +14,7 @@ Prerequisites
 
 - A running lnd node, either on a remote host and accessible from outside, or on the same host, in which case you can either start this container in "host network" mode, or use the container's gateway IP address to reach the host's localhost
 - An [Azure Cognitive Services "Translator Text API"](https://azure.microsoft.com/en-us/services/cognitive-services/translator-text-api/) subscription key
+- An [Azure Cognitive Services "Computer Vision"](https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/) subscription key
 
 Usage
 -----
@@ -21,7 +22,7 @@ Usage
 1. Create a data directory on the host: `mkdir -p api/data`
 2. Copy the `tls.cert` and `invoice.macaroon` from your lnd to the `api/data` directory
 3. Run the web service container with your lnd's address and the Azure translation API key as argument:
-    - `docker run -d --name ln-ws-api --restart unless-stopped -v $(pwd)/api/data:/root/data philippgille/ln-ws-api -addr "123.123.123.123:10009" -translateApiKey "abc123def456"`
+    - `docker run -d --name ln-ws-api --restart unless-stopped -v $(pwd)/api/data:/root/data philippgille/ln-ws-api -addr "123.123.123.123:10009" -translateApiKey "abc123def456" -visionRegion "westus" -visionApiKey "abc123def456"`
 4. Run the website and reverse proxy container:
     - `docker run -d --name caddy --link ln-ws-api -v $(pwd)/Caddyfile:/etc/Caddyfile -v $HOME/.caddy:/root/.caddy -v $(pwd)/www:/srv/www -p 80:80 -p 443:443 abiosoft/caddy`
 5. Either use the interactive client on the website or make the requests programmatically
@@ -30,10 +31,12 @@ Usage
         1. Send a request to generate an invoice:
             - QR code: `curl https://lightning.ws/qr`
             - Translation: `curl https://lightning.ws/translate`
+            - OCR (text recognition): `curl https://lightning.ws/ocr`
         2. Take the invoice from the response body and pay it via the Lightning Network
         3. Send the request again, this time with the preimage as payment proof (hex encoded) and the data as query parameter:
             - QR code: `curl -H "x-preimage: 123abc456def" https://lightning.ws/qr?data=testtext`
             - Translation: `curl -H "x-preimage: 123abc456def" https://lightning.ws/translate?text=Hallo%Welt&to=en`
+            - OCR: `curl -H "x-preimage: 123abc456def" https://lightning.ws/ocr?imageUrl=http%3A%2F%2Fexample%2Ecom%2Fimage%2Epng`
 
 Note
 ----
