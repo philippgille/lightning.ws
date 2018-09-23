@@ -51,7 +51,7 @@
   # 3. Send the request with the preimage as payment proof (hex encoded) and the 
   #    text you want to translate in your chosen target language
   curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://api.lightning.ws/translate?text=Hallo%20Welt&to=en"
-  # 4. The response is the QR code as PNG image
+  # 4. The response is a JSON array with the translation
 </code>
         </pre>
     </div>

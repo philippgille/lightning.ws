@@ -52,7 +52,7 @@
   # 3. Send the request with the preimage as payment proof (hex encoded) and the 
   #    image URL of the image you want to recognize text in
   curl -H "x-preimage: $PAYMENT_PREIMAGE" "https://api.lightning.ws/ocr?imageUrl=http%3A%2F%2Fexample%2Ecom%2Fimage%2Epng"
-  # 4. The response is the QR code as PNG image
+  # 4. The response is a JSON object with the bounding boxes and text of recognized text
 </code>
         </pre>
     </div>
