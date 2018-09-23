@@ -21,6 +21,8 @@
                     <div id="responseContainerQr">
                         <input id="responseAreaQr" type="text">
                         <button onclick="copyToClipboard('responseAreaQr')">Copy to clipboard</button>
+                        <button onclick="show('invoiceQrQr')">Show as Qr code</button> <br>
+                        <img class="invoiceQr" id="invoiceQrQr" alt="qr code of invoice" src="" />
                     </div>
                 </li>
                 <li>Send the request with the preimage as payment proof (hex encoded) and the data you want in the QR code

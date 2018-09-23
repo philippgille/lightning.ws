@@ -128,3 +128,22 @@ footer ul {
 .tab-content pre{
     margin-bottom: 0rem;
 }
+
+#ocrImageWithBoundingBoxes{
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+}
+
+#ocrSVG{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.invoiceQr{
+    display: none;
+}

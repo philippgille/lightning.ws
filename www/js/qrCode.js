@@ -3,7 +3,7 @@
 var APIURL_QR = BASE_URL + "/qr";
 
 function generateInvoiceQR(){
-    generateInvoice(APIURL_QR, ["responseContainerQr", "preimageContainerQr"], "responseAreaQr");
+    generateInvoice(APIURL_QR, ["responseContainerQr", "preimageContainerQr"], "responseAreaQr", "invoiceQrQr");
 }
 
 

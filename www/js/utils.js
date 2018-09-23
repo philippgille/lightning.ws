@@ -22,6 +22,10 @@ function setValueById(id, val) {
     document.getElementById(id).value = val;
 }
 
+function setSrcById(id, val) {
+    document.getElementById(id).src = val;
+}
+
 function setInnerHtmlById(id, val) {
     document.getElementById(id).innerHTML = val;
 }
@@ -39,11 +43,12 @@ function hide(id){
     setCssById(id, {display: "none"});
 }
 
+
 function getValueById(id){
     return document.getElementById(id).value;
 }
 
-function generateInvoice(url, containerIdsToShow, inputFieldId){
+function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId){
     fetch(url, {
         method: 'get',
         headers: new Headers({
@@ -56,6 +61,7 @@ function generateInvoice(url, containerIdsToShow, inputFieldId){
             show(id);
         });
         setValueById(inputFieldId, data);
+        setSrcById(qrCodeImgId, "https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=" + data);
     });
 }
 
