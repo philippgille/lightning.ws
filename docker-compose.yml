@@ -1,0 +1,20 @@
+# This Docker Compose file is for local development only!
+# It's not suitable for production!
+
+version: "3"
+
+services:
+  caddy:
+    image: abiosoft/caddy
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile
+      - ./www:/srv/www
+    ports:
+      - 2015:2015
+  api:
+    build: ./api
+    volumes:
+      # The host directory must contain the invoice.macaroon and tls.cert
+      - ./api/data:/root/data
+      # The environment variables must be set on the host
+    command: "-addr $LND_ADDR -translateApiKey $TRANSLATE_API_KEY -visionRegion $VISION_REGION -visionApiKey $VISION_API_KEY"

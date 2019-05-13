@@ -3,8 +3,9 @@
 var BASE_URL;
 
 function detectBaseUrl(){
-    if (document.location.href.indexOf("staging") !== -1 ||
-            document.location.href.indexOf("localhost")) {
+    if (document.location.href.indexOf("localhost") !== -1) {
+        BASE_URL = "https://localhost:2015/api";
+    } else if (document.location.href.indexOf("staging") !== -1) {
         BASE_URL = "https://staging.api.lightning.ws";
     } else {
         BASE_URL = "https://api.lightning.ws";
