@@ -1,19 +1,16 @@
-# Dockerfile for creating a Docker image that contains the Linux x64 binary
-#
-# It makes use of multi-stage builds and requires Docker 17.05 or later:
-# https://docs.docker.com/engine/userguide/eng-image/multistage-build/
-
 # Builder image
-# Don't bother to clean up the image - it's only used for building
-FROM golang:1.10-alpine as builder
+FROM golang:1.12-alpine as builder
 
 RUN apk add --no-cache git
 
 RUN go env
-RUN go get -v "github.com/philippgille/ln-paywall/..."
-RUN go get -v "github.com/skip2/go-qrcode"
+RUN go get -v "github.com/gin-gonic/gin" \
+    "github.com/philippgille/ln-paywall/ln" \
+    "github.com/philippgille/ln-paywall/storage" \
+    "github.com/philippgille/ln-paywall/wall" \
+    "github.com/skip2/go-qrcode"
 
-WORKDIR /go/src/api/
+WORKDIR /go/src/app
 COPY *.go ./
 RUN go build -v
 
@@ -26,11 +23,12 @@ LABEL maintainer "Philipp Gille"
 RUN apk add --no-cache ca-certificates
 
 WORKDIR /root/
-COPY --from=builder /go/src/api/api ./
+COPY --from=builder /go/src/app/app ./
 RUN mkdir data/
 
+# Volume for invoice.macaroon, tls.cert and embedded DB
 VOLUME [ "/root/data/" ]
 EXPOSE 8080
 
-ENTRYPOINT ["./api"]
+ENTRYPOINT ["./app"]
 CMD ["-help"]
