@@ -22,7 +22,7 @@ Usage
 1. Create a data directory on the host: `mkdir data`
 2. Copy the `tls.cert` and `invoice.macaroon` from your lnd to the `data` directory
 3. Run the container:
-      - `docker run -d --restart unless-stopped -v $(pwd)/data:/root/data -p 8080:8080 philippgille/ln-ws-api -addr "123.123.123.123:10009" -translateApiKey "abc123def456" -visionRegion "westus" -visionApiKey "abc123def456"`
+      - `docker run -d -v $(pwd)/data:/root/data -p 8080:8080 philippgille/ln-ws-api -addr "123.123.123.123:10009" -translateApiKey "abc123def456" -visionRegion "westus" -visionApiKey "abc123def456"`
 4. Send a request to generate an invoice:
       - QR code: `curl http://localhost:8080/qr`
       - Translation: `curl http://localhost:8080/translate`
