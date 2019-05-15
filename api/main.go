@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/philippgille/gokv/bbolt"
 	"github.com/philippgille/ln-paywall/ln"
-	"github.com/philippgille/ln-paywall/storage"
 	"github.com/philippgille/ln-paywall/wall"
 )
 
@@ -56,13 +56,14 @@ func main() {
 	}
 
 	// Storage
-	boltOptions := storage.BoltOptions{
+	boltOptions := bbolt.Options{
 		Path: dataDirSuffixed + "ln-paywall.db",
 	}
-	storageClient, err := storage.NewBoltClient(boltOptions)
+	storageClient, err := bbolt.NewStore(boltOptions)
 	if err != nil {
 		panic(err)
 	}
+	defer storageClient.Close()
 
 	// Configure middleware - endpoint specific
 
