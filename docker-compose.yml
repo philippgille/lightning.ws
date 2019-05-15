@@ -12,7 +12,9 @@ services:
     ports:
       - 2015:2015
   api:
-    build: ./api
+    build:
+      context: ./api
+      dockerfile: docker/Dockerfile
     volumes:
       # The host directory must contain the invoice.macaroon and tls.cert
       - ./api/data:/root/data
