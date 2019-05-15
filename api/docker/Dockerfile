@@ -1,17 +1,14 @@
 # Builder image
 FROM golang:1.12-alpine as builder
 
-RUN apk add --no-cache git
-
-RUN go env
-RUN go get -v "github.com/gin-gonic/gin" \
-    "github.com/philippgille/ln-paywall/ln" \
-    "github.com/philippgille/ln-paywall/storage" \
-    "github.com/philippgille/ln-paywall/wall" \
-    "github.com/skip2/go-qrcode"
+RUN apk add git
 
 WORKDIR /go/src/app
 COPY *.go ./
+
+RUN go env && go list -deps
+
+RUN go get -v ./...
 RUN go build -v
 
 # Runtime image
