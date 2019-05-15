@@ -10,24 +10,26 @@ import (
 	"github.com/philippgille/ln-paywall/wall"
 )
 
-// General config
+var (
+	// General config
 
-var lndAddress = flag.String("addr", "localhost:10009", "Address of the lnd node (including gRPC port)")
-var dataDir = flag.String("dataDir", "data/", "Relative path to the data directory, where tls.cert and invoice.macaroon are located")
+	lndAddress = flag.String("addr", "localhost:10009", "Address of the lnd node (including gRPC port)")
+	dataDir    = flag.String("dataDir", "data/", "Relative path to the data directory, where tls.cert and invoice.macaroon are located")
 
-// Endpoint-specific config
+	// Endpoint-specific config
 
-// QR
-var qrPrice = flag.Int64("qrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+	// QR
+	qrPrice = flag.Int64("qrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
-// Translate
-var translateAPIkey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
-var translatePrice = flag.Int64("translatePrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+	// Translate
+	translateAPIkey = flag.String("translateApiKey", "", "Azure Cognitive Services subscription key for the \"Translator Text API\"")
+	translatePrice  = flag.Int64("translatePrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
 
-// Vision
-var visionAPIkey = flag.String("visionApiKey", "", "Azure Cognitive Services subscription key for \"Computer Vision\"")
-var visionRegion = flag.String("visionRegion", "westcentralus", "Azure region of your created Azure resource - your \"Computer Vision\" subscription key is bound to this region")
-var ocrPrice = flag.Int64("ocrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+	// Vision
+	visionAPIkey = flag.String("visionApiKey", "", "Azure Cognitive Services subscription key for \"Computer Vision\"")
+	visionRegion = flag.String("visionRegion", "westcentralus", "Azure region of your created Azure resource - your \"Computer Vision\" subscription key is bound to this region")
+	ocrPrice     = flag.Int64("ocrPrice", 1000, "Price of one request in Satoshis (at an exchange rate of $1,000 for 1 BTC 1000 Satoshis would be $0.01)")
+)
 
 func main() {
 	flag.Parse()
