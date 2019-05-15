@@ -3,7 +3,7 @@
 var APIURL_TR = BASE_URL + "/translate";
 
 function generateInvoiceTr(){
-    generateInvoice(APIURL_TR, ["responseContainerTr", "preimageContainerTr"], "responseAreaTr", "invoiceQrTr");
+    generateInvoice(APIURL_TR, ["responseContainerTr", "preimageContainerTr"], "responseAreaTr", "invoiceQrTr", "payTr");
 }
 
 function sendPreImageTr(){

@@ -31,6 +31,16 @@ function setInnerHtmlById(id, val) {
     document.getElementById(id).innerHTML = val;
 }
 
+function setHrefById(id, val) {
+    document.getElementById(id).href = val;
+}
+
+// Leads to the browser asking to open an installed wallet, but doesn't seem to trigger the Lightning Joule extension.
+// Lightning Joule extension is triggered when clicking on a proper link.
+function pay(elemendId){
+    window.location.href = 'lightning:'+document.getElementById(elemendId).textContent;
+}
+
 function copyToClipboard(elemendId){
     document.getElementById(elemendId).select();
     document.execCommand('copy');
@@ -49,7 +59,7 @@ function getValueById(id){
     return document.getElementById(id).value;
 }
 
-function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId){
+function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId, payHrefId){
     fetch(url, {
         method: 'get',
         headers: new Headers({
@@ -63,6 +73,6 @@ function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId){
         });
         setValueById(inputFieldId, data);
         setSrcById(qrCodeImgId, "https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=" + data);
+        setHrefById(payHrefId, "lightning:" + data)
     });
 }
-
