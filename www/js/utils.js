@@ -35,12 +35,6 @@ function setHrefById(id, val) {
     document.getElementById(id).href = val;
 }
 
-// Leads to the browser asking to open an installed wallet, but doesn't seem to trigger the Lightning Joule extension.
-// Lightning Joule extension is triggered when clicking on a proper link.
-function pay(elemendId){
-    window.location.href = 'lightning:'+document.getElementById(elemendId).textContent;
-}
-
 function copyToClipboard(elemendId){
     document.getElementById(elemendId).select();
     document.execCommand('copy');
@@ -53,7 +47,6 @@ function show(id){
 function hide(id){
     setCssById(id, {display: "none"});
 }
-
 
 function getValueById(id){
     return document.getElementById(id).value;
