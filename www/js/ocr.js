@@ -3,7 +3,7 @@
 var APIURL_OCR = BASE_URL + "/ocr";
 
 function generateInvoiceOcr(){
-    generateInvoice(APIURL_OCR, ["responseContainerOcr", "preimageContainerOcr"], "responseAreaOcr", "invoiceQrOcr");
+    generateInvoice(APIURL_OCR, ["responseContainerOcr", "preimageContainerOcr"], "responseAreaOcr", "invoiceQrOcr", "payOcr");
 }
 
 function sendPreImageOcr(){

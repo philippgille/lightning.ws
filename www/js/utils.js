@@ -31,6 +31,10 @@ function setInnerHtmlById(id, val) {
     document.getElementById(id).innerHTML = val;
 }
 
+function setHrefById(id, val) {
+    document.getElementById(id).href = val;
+}
+
 function copyToClipboard(elemendId){
     document.getElementById(elemendId).select();
     document.execCommand('copy');
@@ -44,12 +48,11 @@ function hide(id){
     setCssById(id, {display: "none"});
 }
 
-
 function getValueById(id){
     return document.getElementById(id).value;
 }
 
-function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId){
+function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId, payHrefId){
     fetch(url, {
         method: 'get',
         headers: new Headers({
@@ -63,6 +66,6 @@ function generateInvoice(url, containerIdsToShow, inputFieldId, qrCodeImgId){
         });
         setValueById(inputFieldId, data);
         setSrcById(qrCodeImgId, "https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=" + data);
+        setHrefById(payHrefId, "lightning:" + data)
     });
 }
-
